@@ -34,18 +34,18 @@ else
     echo ""
 fi
 
-# .envファイルの存在確認
-if [ ! -f .env ]; then
+# .envファイルの存在確認（tnappディレクトリ内）
+if [ ! -f "$TNAPP_DIR/.env" ]; then
     echo "⚠️  .envファイルが見つかりません"
-    if [ -f .env.example ]; then
+    if [ -f "$TNAPP_DIR/.env.example" ]; then
         echo "📋 .env.exampleから.envを作成します..."
-        cp .env.example .env
+        cp "$TNAPP_DIR/.env.example" "$TNAPP_DIR/.env"
         echo "✅ .envファイルを作成しました"
-        echo "⚠️  必要に応じて.envファイルを編集してください"
+        echo "⚠️  必要に応じて$TNAPP_DIR/.envファイルを編集してください"
     else
         echo "❌ .env.exampleも見つかりません"
         echo "   最低限の.envファイルを作成します..."
-        cat > .env << EOF
+        cat > "$TNAPP_DIR/.env" << EOF
 # サーバー設定
 PORT=3000
 NODE_ENV=production
