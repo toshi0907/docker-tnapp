@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  tnapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tnapp
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - PORT=${PORT:-3000}
+      # リマインダー通知設定
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      # メール設定（SMTP）
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SECURE:-false}
+      - SMTP_AUTH_METHOD=${SMTP_AUTH_METHOD:-PLAIN}
+      - SMTP_REQUIRE_TLS=${SMTP_REQUIRE_TLS:-true}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - EMAIL_TO=${EMAIL_TO}
+      # Basic認証設定（オプション）
+      - BASIC_AUTH_ENABLED=${BASIC_AUTH_ENABLED:-true}
+    volumes:
+      # データの永続化
+      - ./data:/app/data
+      # 開発時のホットリロード用（開発環境の場合）
+      # - ./src:/app/src
+      # - ./public:/app/public
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
+    networks:
+      - tnapp-network
+
+networks:
+  tnapp-network:
+    driver: bridge
+
+volumes:
+  data:

@@ -1,0 +1,47 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# 環境変数
+.env
+.env.local
+.env.*.local
+
+# テスト
+coverage
+*.log
+.nyc_output
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose*.yml
+
+# ドキュメント
+*.md
+docs
+
+# データファイル（永続化用にボリュームマウントするため）
+data/*.json
+
+# テストファイル
+tests
+*.test.js
+*.spec.js
+jest.config.js
