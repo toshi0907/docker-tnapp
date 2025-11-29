@@ -95,16 +95,16 @@ fi
 
 # 既存のコンテナを停止・削除
 echo "🧹 既存のコンテナをクリーンアップします..."
-docker-compose down
+docker compose down
 
 # イメージのビルドとコンテナの起動
 echo ""
 echo "🔨 イメージをビルドします..."
-docker-compose build
+docker compose build
 
 echo ""
 echo "🚀 コンテナを起動します..."
-docker-compose up -d
+docker compose up -d
 
 # 起動待機
 echo ""
@@ -115,7 +115,7 @@ sleep 5
 MAX_RETRIES=30
 RETRY_COUNT=0
 while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-    if docker-compose ps | grep -q "healthy"; then
+    if docker compose ps | grep -q "healthy"; then
         echo ""
         echo "=========================================="
         echo "✅ TNアプリケーションが正常に起動しました！"
@@ -126,23 +126,23 @@ while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
         echo "   - API仕様書: http://localhost:3000/api-docs"
         echo ""
         echo "📊 ステータス確認:"
-        docker-compose ps
+        docker compose ps
         echo ""
         echo "📋 ログ表示:"
-        echo "   docker-compose logs -f"
+        echo "   docker compose logs -f"
         echo ""
         echo "🛑 停止コマンド:"
-        echo "   docker-compose down"
+        echo "   docker compose down"
         echo ""
         exit 0
     fi
     
-    if ! docker-compose ps | grep -q "Up"; then
+    if ! docker compose ps | grep -q "Up"; then
         echo ""
         echo "❌ コンテナの起動に失敗しました"
         echo ""
         echo "📋 ログを確認してください:"
-        docker-compose logs
+        docker compose logs
         exit 1
     fi
     
@@ -156,6 +156,6 @@ echo "⚠️  ヘルスチェックがタイムアウトしました"
 echo "   コンテナは起動していますが、ヘルスチェックが完了していません"
 echo ""
 echo "📋 ログを確認してください:"
-docker-compose logs
+docker compose logs
 
 exit 1
