@@ -3,7 +3,7 @@ version: '3.8'
 services:
   tnapp:
     build:
-      context: .
+      context: ./tnapp
       dockerfile: Dockerfile
     container_name: tnapp
     ports:

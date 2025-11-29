@@ -34,28 +34,6 @@ else
     echo ""
 fi
 
-# tnappディレクトリに移動してpackage.jsonをコピー
-if [ -f "$TNAPP_DIR/package.json" ]; then
-    echo "📋 package.jsonをコピーします..."
-    cp "$TNAPP_DIR/package.json" ./
-    if [ -f "$TNAPP_DIR/package-lock.json" ]; then
-        cp "$TNAPP_DIR/package-lock.json" ./
-    fi
-    echo "✅ package.jsonをコピーしました"
-    echo ""
-fi
-
-# tnappのソースコードをコピー
-if [ -d "$TNAPP_DIR/src" ]; then
-    echo "📋 ソースコードをコピーします..."
-    cp -r "$TNAPP_DIR/src" ./
-    if [ -d "$TNAPP_DIR/public" ]; then
-        cp -r "$TNAPP_DIR/public" ./
-    fi
-    echo "✅ ソースコードをコピーしました"
-    echo ""
-fi
-
 # .envファイルの存在確認
 if [ ! -f .env ]; then
     echo "⚠️  .envファイルが見つかりません"
@@ -100,6 +78,19 @@ if [ ! -d ./data ]; then
     mkdir -p ./data
     echo "✅ dataディレクトリを作成しました"
     echo ""
+fi
+
+# Dockerfileの確認とコピー
+if [ ! -f "$TNAPP_DIR/Dockerfile" ]; then
+    if [ -f "./Dockerfile" ]; then
+        echo "📋 Dockerfileをtnappディレクトリにコピーします..."
+        cp ./Dockerfile "$TNAPP_DIR/"
+        echo "✅ Dockerfileをコピーしました"
+        echo ""
+    else
+        echo "❌ Dockerfileが見つかりません"
+        exit 1
+    fi
 fi
 
 # 既存のコンテナを停止・削除
