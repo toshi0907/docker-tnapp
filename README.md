@@ -12,5 +12,5 @@ cp .env.example .env
 
 cd ..
 
-docker-compose up -d
+docker compose up -d
 ```
