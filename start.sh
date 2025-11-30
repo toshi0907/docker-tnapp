@@ -80,19 +80,6 @@ if [ ! -d ./data ]; then
     echo ""
 fi
 
-# Dockerfileの確認とコピー
-if [ ! -f "$TNAPP_DIR/Dockerfile" ]; then
-    if [ -f "./Dockerfile" ]; then
-        echo "📋 Dockerfileをtnappディレクトリにコピーします..."
-        cp ./Dockerfile "$TNAPP_DIR/"
-        echo "✅ Dockerfileをコピーしました"
-        echo ""
-    else
-        echo "❌ Dockerfileが見つかりません"
-        exit 1
-    fi
-fi
-
 # 既存のコンテナを停止・削除
 echo "🧹 既存のコンテナをクリーンアップします..."
 docker compose down
