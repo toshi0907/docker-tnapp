@@ -9,6 +9,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      - TZ=Asia/Tokyo
       - NODE_ENV=${NODE_ENV:-production}
       - PORT=${PORT:-3000}
       # リマインダー通知設定

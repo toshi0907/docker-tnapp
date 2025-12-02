@@ -1,6 +1,9 @@
 # ベースイメージとしてNode.js 18を使用
 FROM node:18-alpine AS base
 
+# タイムゾーンを日本に設定
+ENV TZ=Asia/Tokyo
+
 # 作業ディレクトリの設定
 WORKDIR /app
 
